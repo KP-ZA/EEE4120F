@@ -24,15 +24,15 @@ void Process_Serial(){
  }
 }
 //------------------------------------------------------------------------------
-
+//******************************************************************************
 void Process_OpenCL(){
  printf("\n");
 
  OpenCL_ConstantInt(3, N);
  tic();
  OpenCL_WriteData(A_Buffer, N*N*sizeof(float), A);
-
  printf("A_Buffer: %lg ms\n", toc()/1e-3);
+
  tic();
  OpenCL_WriteData(B_Buffer, N*N*sizeof(float), B);
  printf("B_Buffer: %lg ms\n", toc()/1e-3);
