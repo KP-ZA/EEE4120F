@@ -29,13 +29,21 @@ void Process_OpenCL(){
  printf("\n");
 
  OpenCL_ConstantInt(3, N);
-
+ tic();
  OpenCL_WriteData(A_Buffer, N*N*sizeof(float), A);
+
+ printf("A_Buffer: %lg ms\n", toc()/1e-3);
+ tic();
  OpenCL_WriteData(B_Buffer, N*N*sizeof(float), B);
+ printf("B_Buffer: %lg ms\n", toc()/1e-3);
 
+ tic();
  OpenCL_Run(N, LocalSize);
-
+ printf("Run: %lg ms\n", toc()/1e-3);
+ tic();
  OpenCL_ReadData(OutputBuffer, N*N*sizeof(float), Output_OpenCL);
+ printf("Read: %lg ms\n", toc()/1e-3);
+
 }
 //------------------------------------------------------------------------------
 
@@ -101,7 +109,7 @@ int main(){
  // Load a kernel
  if(!OpenCL_LoadKernel("OpenCL/Kernel.cl", "Multiply")) return 1;
 
- N = 3;
+ N = 3;//number************************************************************
  size_t BufferSize = N*N*sizeof(float);
 
  // Allocate CPU RAM
@@ -121,13 +129,9 @@ int main(){
  OutputBuffer = OpenCL_CreateBuffer(2, CL_MEM_WRITE_ONLY, BufferSize);
 
  // Process the matrices
- tic();
  Process_Serial();
- printf("Serial: %lg ms\n", toc()/1e-3);
 
- tic();
  Process_OpenCL();
- printf("\nOpenCL: %lg ms\n\n", toc()/1e-3);
 
  // Compare results
  Compare();
