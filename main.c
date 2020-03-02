@@ -27,7 +27,7 @@ void Process_Serial(){
 //******************************************************************************
 void Process_OpenCL(){
  printf("\n");
-
+ printf("Matrix is an %dx%d matrix\n", N, N);
  OpenCL_ConstantInt(3, N);
  tic();
  OpenCL_WriteData(A_Buffer, N*N*sizeof(float), A);
@@ -109,7 +109,7 @@ int main(){
  // Load a kernel
  if(!OpenCL_LoadKernel("OpenCL/Kernel.cl", "Multiply")) return 1;
 
- N = 3;//number************************************************************
+ N = 10;//number************************************************************
  size_t BufferSize = N*N*sizeof(float);
 
  // Allocate CPU RAM
@@ -134,7 +134,7 @@ int main(){
  Process_OpenCL();
 
  // Compare results
- Compare();
+ //Compare();*****************************************************************
 
  // Clean-up
  free(A);
