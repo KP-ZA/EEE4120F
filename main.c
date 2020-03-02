@@ -45,6 +45,8 @@ void Process_OpenCL(){
   OpenCL_ReadData(OutputBuffer, N*N*sizeof(float), Output_OpenCL);
   printf("Read: %lg ms\n", toc()/1e-3);
  }
+ N = N +1;
+ Process_OpenCL();
 }
 //------------------------------------------------------------------------------
 
