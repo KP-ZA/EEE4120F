@@ -26,27 +26,25 @@ void Process_Serial(){
 //------------------------------------------------------------------------------
 //******************************************************************************
 void Process_OpenCL(){
- if(N<=5){
-  printf("\n");
-  printf("Matrix is an %dx%d matrix\n", N, N);
-  OpenCL_ConstantInt(3, N);
-  tic();
-  OpenCL_WriteData(A_Buffer, N*N*sizeof(float), A);
-  printf("A_Buffer: %lg ms\n", toc()/1e-3);
 
-  tic();
-  OpenCL_WriteData(B_Buffer, N*N*sizeof(float), B);
-  printf("B_Buffer: %lg ms\n", toc()/1e-3);
+ printf("\n");
+ printf("Matrix is an %dx%d matrix\n", N, N);
+ OpenCL_ConstantInt(3, N);
+ tic();
+ OpenCL_WriteData(A_Buffer, N*N*sizeof(float), A);
+ printf("A_Buffer: %lg ms\n", toc()/1e-3);
 
-  tic();
-  OpenCL_Run(N, LocalSize);
-  printf("Run: %lg ms\n", toc()/1e-3);
-  tic();
-  OpenCL_ReadData(OutputBuffer, N*N*sizeof(float), Output_OpenCL);
-  printf("Read: %lg ms\n", toc()/1e-3);
- }
- N = N +1;
- Process_OpenCL();
+ tic();
+ OpenCL_WriteData(B_Buffer, N*N*sizeof(float), B);
+ printf("B_Buffer: %lg ms\n", toc()/1e-3);
+
+ tic();
+ OpenCL_Run(N, LocalSize);
+ printf("Run: %lg ms\n", toc()/1e-3);
+ tic();
+ OpenCL_ReadData(OutputBuffer, N*N*sizeof(float), Output_OpenCL);
+ printf("Read: %lg ms\n", toc()/1e-3);
+
 }
 //------------------------------------------------------------------------------
 
@@ -112,7 +110,7 @@ int main(){
  // Load a kernel
  if(!OpenCL_LoadKernel("OpenCL/Kernel.cl", "Multiply")) return 1;
 
- N = 2;//number************************************************************
+ N = 3;//number************************************************************
  size_t BufferSize = N*N*sizeof(float);
 
  // Allocate CPU RAM
