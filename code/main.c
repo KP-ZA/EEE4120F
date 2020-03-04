@@ -33,26 +33,26 @@ void Process_OpenCL(){
  tic();
  OpenCL_WriteData(A_Buffer, N*N*sizeof(float), A);
  double A_Buff = toc()/1e-3;
- printf("A_Buffer: %lg ms\n", A_Buff);
+ printf("A_Buffer time: %lg ms\n", A_Buff);
 
  tic();
  OpenCL_WriteData(B_Buffer, N*N*sizeof(float), B);
  double B_Buff = toc()/1e-3;
- printf("B_Buffer: %lg ms\n", B_Buff);
+ printf("B_Buffer time: %lg ms\n", B_Buff);
 
  tic();
  OpenCL_Run(N, LocalSize);
  double run_t = toc()/1e-3;
- printf("Run: %lg ms\n", run_t);
+ printf("Runtime: %lg ms\n", run_t);
 
  tic();
  OpenCL_ReadData(OutputBuffer, N*N*sizeof(float), Output_OpenCL);
  double read_data = toc()/1e-3;
- printf("Read: %lg ms\n", read_data);
+ printf("Read time: %lg ms\n", read_data);
  double total = A_Buff + B_Buff + run_t + read_data;
-
+ printf("Total overhead time: %lg ms\n", total);
  double speed_up = total/run_t;
- printf("The speed up time is: %lg", speed_up);
+ printf("The speed up time is: %lg\n\n", speed_up);
 }
 //------------------------------------------------------------------------------
 
@@ -118,7 +118,7 @@ int main(){
  // Load a kernel
  if(!OpenCL_LoadKernel("OpenCL/Kernel.cl", "Multiply")) return 1;
 
- N = 3;//number************************************************************
+ N = 44;//number************************************************************
  size_t BufferSize = N*N*sizeof(float);
 
  // Allocate CPU RAM
